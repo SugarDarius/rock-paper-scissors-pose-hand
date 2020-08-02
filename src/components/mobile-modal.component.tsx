@@ -6,17 +6,16 @@ import {
     ModalHeader,
     ModalBody,
     Text,
-    useDisclosure,
 } from '@chakra-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useMobileDetection } from '../hooks';
+export type MobileModalProps = {
+    open?: boolean;
+}
 
-export function MobileModal() {
-    const isMobile = useMobileDetection();
-    
+export function MobileModal({ open }: MobileModalProps) {
     return (
-        <Modal isOpen={isMobile}>
+        <Modal isOpen={open}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>

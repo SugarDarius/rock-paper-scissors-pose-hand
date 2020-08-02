@@ -1,34 +1,45 @@
 import * as React from 'react';
+
 import { 
     Flex,
     Box,
-    Heading,
     Text,
     Link,
     Tooltip,
     IconButton,
+    Stack,
     DarkMode,
     LightMode,
     useColorMode,
+    useDisclosure,
 } from '@chakra-ui/core';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { 
 	Layout,
     Meta,
     MobileModal,
+    GreetingsModal,
 } from '../components';
-import { useSite } from '../hooks';
+
+import { 
+    useSite,
+    useMobileDetection, 
+} from '../hooks';
 
 export default function IndexPage(): React.ReactElement {
     const site = useSite();
-	const { colorMode, toggleColorMode } = useColorMode();
+    const isMobile = useMobileDetection();
 
-	const [isDarkMode, setDarkState] = React.useState<boolean>(false);
+    const { colorMode, toggleColorMode } = useColorMode();
+    const { isOpen, onClose } = useDisclosure(true);
+
+	const [isDarkMode, setDarkState] = React.useState<boolean>();
 
 	React.useEffect(() => {
 		setDarkState(colorMode === 'dark');
-	}, [colorMode]);
+    }, [colorMode]);
 
 	// gatsby build issue workaround with chakra-ui
 	const WrapperColorSchemeMode = isDarkMode ? DarkMode : LightMode;
@@ -57,9 +68,21 @@ export default function IndexPage(): React.ReactElement {
                     alignItems='center'
                     justifyContent='center'
                 >
-                    <Heading as='h1' fontWeight={400}>
-                        Rock Paper Scissors Pose Hand 👋
-                    </Heading>
+                    <Stack
+                        direction='row' 
+                        alignItems='center'
+                        spacing='1.550rem'
+                    >
+                        <Box width='auto'>
+                            <FontAwesomeIcon icon={['fas', 'hand-rock']} size='2x'/>
+                        </Box>
+                        <Box width='auto'>
+                            <FontAwesomeIcon icon={['fas', 'hand-paper']} size='2x'/>
+                        </Box>
+                        <Box width='auto'>
+                            <FontAwesomeIcon icon={['fas', 'hand-scissors']} size='2x'/>
+                        </Box>
+                    </Stack>
                 </Flex>
                 <Flex
                     position='relative'
@@ -110,7 +133,11 @@ export default function IndexPage(): React.ReactElement {
                     </WrapperColorSchemeMode>
 				</Box>
             </Flex>
-            <MobileModal />
+            <GreetingsModal 
+                open={isOpen} 
+                onClose={onClose} 
+            />
+            <MobileModal open={isMobile} />
         </Layout>
     );
 }
