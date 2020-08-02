@@ -10,11 +10,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { 
-    useKey
+    useKey,
 } from 'react-use';
 
 import { 
-    useShuffle
+    useShuffle,
+    useSequenceRunner,
 } from '../hooks';
 
 export type GameProps = {
@@ -24,14 +25,33 @@ export type GameProps = {
 export function Game({ disable }: GameProps) {
     const [ scores, setScores ] = React.useState<number[]>([0, 0]);
     const [ isPlaying, setIsPlayingState ] = React.useState<boolean>(false);
+    const [ countdown, setCoundownValue ] = React.useState<'READY?' | 'ROCK!' | 'PAPER!' | 'SCISSORS!'>('READY?');
 
-    const { result, shuffle } = useShuffle<string>(['rock', 'paper', 'scissors']);
+    const { list, shuffle } = useShuffle<string>(['rock', 'paper', 'scissors']);
+
+    const { isRunning, start, } = useSequenceRunner([
+        () => { setCoundownValue('ROCK!') },
+        () => { setCoundownValue('PAPER!') },
+        () => { setCoundownValue('SCISSORS!') },
+    ], 800);
 
     useKey(' ', () => {
         if (!isPlaying && !disable) {
-            console.log('space bar pressed!');
+            setIsPlayingState(true);
         }
     }, { }, [isPlaying, disable]);
+
+    React.useEffect(() => {
+        if (isPlaying) {
+            start();
+        }
+    }, [isPlaying]);
+
+    React.useEffect(() => {
+        if (!isRunning && countdown === 'SCISSORS!') {
+            console.log('take hand snapshot');
+        }
+    }, [isRunning, countdown]);
 
     return (
         <Flex
@@ -72,7 +92,11 @@ export function Game({ disable }: GameProps) {
                                     <FontAwesomeIcon icon={['fas', 'keyboard']} /><br />
                                     press space to start
                                 </Text>
-                            ) : null
+                            ) : (
+                                <Text as='span' fontWeight={700} fontSize='3rem' textAlign='center'>
+                                    {countdown}
+                                </Text>
+                            )
                         }
                     </Flex>
                     <Divider />

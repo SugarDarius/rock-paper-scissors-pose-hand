@@ -2,14 +2,14 @@ import * as React from 'react';
 
 export type UseShuffleReturnType<T> = {
     shuffle: () => void;
-    result: T[];
+    list: T[];
 };
 
-export function useShuffle<T>(list: T[]): UseShuffleReturnType<T> {
-    const [ result, setResult ] = React.useState<T[]>([]);
+export function useShuffle<T>(input: T[]): UseShuffleReturnType<T> {
+    const [ output, setOutput ] = React.useState<T[]>([]);
 
     const shuffle = <T>(list: T[]): void => {
-        let shuffedList: typeof result = [];
+        let shuffledList: typeof output = [];
         const length = list.length;
 
         if (length > 0) {
@@ -18,18 +18,18 @@ export function useShuffle<T>(list: T[]): UseShuffleReturnType<T> {
 
             while (++index) {
                 const rand = index + Math.floor(Math.random() * (lastIndex - index + 1));
-                const value = shuffedList[rand];
+                const value = shuffledList[rand];
 
-                shuffedList[rand] = shuffedList[index];
-                shuffedList[index] = value;
+                shuffledList[rand] = shuffledList[index];
+                shuffledList[index] = value;
             }
 
-            setResult(shuffedList);
+            setOutput(shuffledList);
         }
     };
 
     return {
-        shuffle: () => { shuffle(list) },
-        result,
+        shuffle: () => { shuffle(input) },
+        list: output,
     };
 } 
