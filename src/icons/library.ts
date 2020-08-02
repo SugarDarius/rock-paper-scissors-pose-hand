@@ -10,6 +10,8 @@ import {
     faHandPaper,
     faHandScissors,
     faCode,
+    faBan,
+    faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -20,4 +22,6 @@ library.add(
     faHandPaper,
     faHandScissors,
     faCode,
+    faBan,
+    faExclamationTriangle,
 );

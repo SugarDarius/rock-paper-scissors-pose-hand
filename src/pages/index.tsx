@@ -15,7 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { 
 	Layout,
-	Meta,
+    Meta,
+    MobileModal,
 } from '../components';
 import { useSite } from '../hooks';
 
@@ -31,7 +32,6 @@ export default function IndexPage(): React.ReactElement {
 
 	// gatsby build issue workaround with chakra-ui
 	const WrapperColorSchemeMode = isDarkMode ? DarkMode : LightMode;
-    const iconDarkModeBaseColor = '#ffffff';
     
     return (
         <Layout>
@@ -82,7 +82,7 @@ export default function IndexPage(): React.ReactElement {
                     justifyContent='center'
                 >
                     <Text fontSize='md' textAlign='center'>
-                        Developed with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link><br />
+                        Made with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link><br />
                         You can check the code <FontAwesomeIcon icon={['fas', 'code']} size='1x' /> on <Link isExternal href='https://github.com/SugarDarius/rock-paper-scissors-pose-hand'>GitHub <FontAwesomeIcon icon={['fab', 'github']} size='1x' /></Link>
                     </Text>
                 </Flex>
@@ -110,6 +110,7 @@ export default function IndexPage(): React.ReactElement {
                     </WrapperColorSchemeMode>
 				</Box>
             </Flex>
+            <MobileModal />
         </Layout>
     );
 }
