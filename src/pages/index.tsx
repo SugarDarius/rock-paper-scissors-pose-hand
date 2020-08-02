@@ -94,7 +94,7 @@ export default function IndexPage(): React.ReactElement {
                     alignItems='center'
                     justifyContent='center'
                 >
-                    <Game />
+                    <Game disable={isOpen} />
                 </Flex>
                 <Flex
                     position='relative'

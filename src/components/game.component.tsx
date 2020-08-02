@@ -9,9 +9,29 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export function Game() {
+import { 
+    useKey
+} from 'react-use';
+
+import { 
+    useShuffle
+} from '../hooks';
+
+export type GameProps = {
+    disable?: boolean;
+};
+
+export function Game({ disable }: GameProps) {
     const [ scores, setScores ] = React.useState<number[]>([0, 0]);
     const [ isPlaying, setIsPlayingState ] = React.useState<boolean>(false);
+
+    const { result, shuffle } = useShuffle<string>(['rock', 'paper', 'scissors']);
+
+    useKey(' ', () => {
+        if (!isPlaying && !disable) {
+            console.log('space bar pressed!');
+        }
+    }, { }, [isPlaying, disable]);
 
     return (
         <Flex
