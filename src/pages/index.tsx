@@ -21,6 +21,7 @@ import {
     Meta,
     MobileModal,
     GreetingsModal,
+    Game,
 } from '../components';
 
 import { 
@@ -33,7 +34,7 @@ export default function IndexPage(): React.ReactElement {
     const isMobile = useMobileDetection();
 
     const { colorMode, toggleColorMode } = useColorMode();
-    const { isOpen, onClose } = useDisclosure(true);
+    const { isOpen, onClose } = useDisclosure(!isMobile);
 
 	const [isDarkMode, setDarkState] = React.useState<boolean>();
 
@@ -93,7 +94,7 @@ export default function IndexPage(): React.ReactElement {
                     alignItems='center'
                     justifyContent='center'
                 >
-
+                    <Game />
                 </Flex>
                 <Flex
                     position='relative'

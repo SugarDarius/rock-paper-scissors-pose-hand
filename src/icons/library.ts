@@ -12,6 +12,8 @@ import {
     faCode,
     faBan,
     faExclamationTriangle,
+    faMinus,
+    faKeyboard,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -24,4 +26,6 @@ library.add(
     faCode,
     faBan,
     faExclamationTriangle,
+    faMinus,
+    faKeyboard,
 );
