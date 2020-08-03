@@ -9,11 +9,13 @@ import {
     faHandRock,
     faHandPaper,
     faHandScissors,
+    faHandPeace,
     faCode,
     faBan,
     faExclamationTriangle,
     faMinus,
     faKeyboard,
+    faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -23,9 +25,11 @@ library.add(
     faHandRock,
     faHandPaper,
     faHandScissors,
+    faHandPeace,
     faCode,
     faBan,
     faExclamationTriangle,
     faMinus,
     faKeyboard,
+    faSpinner,
 );

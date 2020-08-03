@@ -1,28 +1,26 @@
 import * as React from 'react';
 
-import { 
-    Flex,
-    Divider,
-    Text,
-    Box,
-} from '@chakra-ui/core';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Flex } from '@chakra-ui/core';
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 
-import { 
-    useKey,
-} from 'react-use';
+import { useKey } from 'react-use';
 
 import { 
     useShuffle,
     useSequenceRunner,
     useUserMedia,
+    useHandPosePredictions,
 } from '../hooks';
 
 import { Flash } from './flash.component';
 import { Canvas } from './canvas.component';
 import { Camera } from './camera.component';
+import { Scene } from './scene.component';
+import { Display, Incantation } from './display.component';
+import { Scores } from './scores.component';
+import { load } from '@tensorflow-models/handpose';
+
+export type HandState = 'rock' | 'paper' | 'scissors' | null;
 
 export type GameProps = {
     disable?: boolean;
@@ -39,16 +37,24 @@ export function Game({ disable }: GameProps) {
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-    const [ scores, setScores ] = React.useState<number[]>([0, 0]);
-    const [ isPlaying, setIsPlayingState ] = React.useState<boolean>(false);
-    const [ incantation, setIncantationValue ] = React.useState<'READY?' | 'ROCK!' | 'PAPER!' | 'SCISSORS!'>('READY?');
-    const [ isVideoPlaying, setIsVideoPlaying ] = React.useState<boolean>(false);
-    const [ isCanvasEmpty, setIsCanvasEmptyState ] = React.useState<boolean>(true);
-    const [ isFlashing, setIsFlashingState ] = React.useState<boolean>(false);
-    const [ listIsShuffled, setListIsShuffledState ] = React.useState<boolean>(false);
-    const [ algoHand, setAlgoHand ] = React.useState<string | null>(null);
+    const [scores, setScores] = React.useState<number[]>([0, 0]);
+    const [isPlayerPlaying, setIsPlayerPlayingState] = React.useState<boolean>(false);
+    const [incantation, setIncantationValue] = React.useState<Incantation>('READY?');
+    const [isVideoPlaying, setIsVideoPlaying] = React.useState<boolean>(false);
+    const [isCanvasEmpty, setIsCanvasEmptyState] = React.useState<boolean>(true);
+    const [isFlashing, setIsFlashingState] = React.useState<boolean>(false);
+    const [listIsShuffled, setListIsShuffledState] = React.useState<boolean>(false);
+    const [algoHand, setAlgoHand] = React.useState<HandState>(null);
 
-    const mediaStream = useUserMedia({
+    const {
+        loading,
+        error,
+        getPrediction,
+        resetPrediction,
+        prediction
+    } = useHandPosePredictions(canvasRef);
+
+    const { mediaStream, getMediaStream } = useUserMedia({
         audio: false,
         video: {
             facingMode: 'user',
@@ -57,7 +63,7 @@ export function Game({ disable }: GameProps) {
         }
     });
     
-    const { list, shuffle } = useShuffle<string>(['rock', 'paper', 'scissors']);
+    const { list, shuffle } = useShuffle<HandState>(['rock', 'paper', 'scissors']);
 
     const { isSequenceRunning, start } = useSequenceRunner([
         () => { setIncantationValue('ROCK!') },
@@ -65,17 +71,23 @@ export function Game({ disable }: GameProps) {
         () => { setIncantationValue('SCISSORS!') },
     ], 800);
 
-    useKey(' ', () => {
-        if (!isPlaying && !disable) {
-            setIsPlayingState(true);
+    React.useEffect(() => {
+        if (!loading && !error) {
+            getMediaStream();
         }
-    }, { }, [isPlaying, disable]);
+    }, [loading, error]);
+
+    useKey(' ', () => {
+        if (!isPlayerPlaying && !disable && !loading && !error && !!mediaStream) {
+            setIsPlayerPlayingState(true);
+        }
+    }, { }, [isPlayerPlaying, disable, loading, error, mediaStream]);
 
     React.useEffect(() => {
-        if (isPlaying) {
+        if (isPlayerPlaying) {
             start();
         }
-    }, [isPlaying]);
+    }, [isPlayerPlaying]);
 
     const onCaptureCanvas = () => {
         if (!!canvasRef.current && !!videoRef.current) {
@@ -116,12 +128,9 @@ export function Game({ disable }: GameProps) {
     React.useEffect(() => {
         if (!!algoHand && !isCanvasEmpty) {
             console.log('time to predict with', algoHand);
+            getPrediction();
         }
     }, [algoHand, isCanvasEmpty]);
-
-    if (!!mediaStream && !!videoRef.current && !videoRef.current.srcObject) {
-        videoRef.current.srcObject = mediaStream;
-    }
 
     const onCanPlay = () => {
         if (!!videoRef.current) {
@@ -137,14 +146,18 @@ export function Game({ disable }: GameProps) {
         }
 
         setIncantationValue('READY?');
-        setIsPlayingState(false);
+        setIsPlayerPlayingState(false);
         setIsCanvasEmptyState(true);
         setIsFlashingState(false);
         setListIsShuffledState(false);
         setAlgoHand(null);
+        resetPrediction();
     };
 
     const isEndGamePredicate = !isCanvasEmpty && incantation === 'SCISSORS!' && listIsShuffled && !!algoHand;
+    if (!!mediaStream && !!videoRef.current && !videoRef.current.srcObject) {
+        videoRef.current.srcObject = mediaStream;
+    }
 
     return (
         <Flex
@@ -155,136 +168,41 @@ export function Game({ disable }: GameProps) {
             alignItems='center'
             justifyContent='center'
         >
-            <Flex
-                position='relative'
-                direction='row'
-                width='100%'
-                height='auto'
-                alignItems='center'
-                justifyContent='center'
-            >
-                <Flex
-                    direction='row'
-                    width='100%'
-                    height='auto'
-                    alignItems='stretch'
-                    justifyContent='center'
-                >
-                    <Flex
-                        position='relative'
-                        direction='column'
-                        width='50%'
-                        height='auto'
-                        alignItems='center'
-                        justifyContent='center'
-                        padding='0 12px'
-                    >
-                        {
-                            !isPlaying ? (
-                                <React.Fragment>
-                                    <Text as='span' fontWeight={500} fontSize='1.5rem' textAlign='center'>
-                                        <FontAwesomeIcon icon={['fas', 'keyboard']} /><br />
-                                        press space to start
-                                    </Text>
-                                    <Text as='span' textAlign='center'>
-                                        After the incantation (Ready? - Rock! - Paper! - Scissors!) the camera will take a capture of your hand.<br />
-                                        Be sure to have your hand clearly visbile in front the camera.
-                                    </Text>
-                                </React.Fragment>
-                            ) : isEndGamePredicate ? ( 
-                                <Text as='span' fontWeight={700} fontSize='6rem' textAlign='center'>
-                                    <FontAwesomeIcon icon={['fas', icons[algoHand]]} />
-                                </Text>
-                            ) : (
-                                <Text as='span' fontWeight={700} fontSize='3rem' textAlign='center'>
-                                    {incantation}
-                                </Text>
-                            )
-                        }
-                    </Flex>
-                    <Divider />
-                    <Flex
-                        position='relative'
-                        direction='column'
-                        width='50%'
-                        height='auto'
-                        alignItems='center'
-                        justifyContent='center'
-                        padding='0 12px'
-                    >
-                        <Flex
-                            position='relative'
-                            direction='column'
-                            alignItems='center'
-                            justifyContent='center'
-                            width={sizes[0]}
-                            height={sizes[1]}
-                        >
-                            {
-                                !!mediaStream ? (
-                                    <Camera
-                                        ref={videoRef}
-                                        isVideoPlaying={isVideoPlaying}
-                                        width={sizes[0]}
-                                        height={sizes[1]}
-                                        onCanPlay={onCanPlay}
-                                    />
-                                ) : null
-                            }
-                            <Canvas
-                                ref={canvasRef}
+            <Scene sizes={sizes}>
+                <Display
+                    isModelLoading={loading}
+                    isModelError={!!error}
+                    isPlayerPlaying={isPlayerPlaying}
+                    isEndGame={isEndGamePredicate}
+                    incantation={incantation}
+                    handIcon={!!algoHand ? icons[algoHand] : 'hand-peace'}
+                />
+                <React.Fragment>
+                    {
+                        !!mediaStream ? (
+                            <Camera
+                                ref={videoRef}
+                                isVideoPlaying={isVideoPlaying}
                                 width={sizes[0]}
                                 height={sizes[1]}
+                                onCanPlay={onCanPlay}
                             />
-                            <Flash
-                                flash={isFlashing}
-                                onAnimationEnd={() => {
-                                    setIsFlashingState(false);
-                                }}
-                            />
-                        </Flex>
-                    </Flex>
-                </Flex>
-            </Flex>
-            <Flex
-                position='relative'
-                direction='row'
-                width='100%'
-                height='auto'
-                alignItems='center'
-                justifyContent='center'
-                padding='24px'
-            >
-                <Box position='relative'>
-                    <Text as='span' fontSize='4rem' fontWeight={700}>
-                        ALGO
-                    </Text>
-                </Box>
-                <Flex
-                    position='relative'
-                    direction='row'
-                    width='320px'
-                    height='auto'
-                    alignItems='center'
-                    justifyContent='space-between'
-                    margin='0 24px'
-                >
-                    <Text as='span' fontSize='4rem' fontWeight={700}>
-                        {scores[0]}
-                    </Text>
-                    <Text as='span' fontSize='4rem' fontWeight={700}>
-                        <FontAwesomeIcon icon={['fas', 'minus']} />
-                    </Text>
-                    <Text as='span' fontSize='4rem' fontWeight={700}>
-                        {scores[1]}
-                    </Text>
-                </Flex>
-                <Box position='relative'>
-                    <Text as='span' fontSize='4rem' fontWeight={700}>
-                        YOU
-                    </Text>
-                </Box>
-            </Flex>
+                        ) : null
+                    }
+                    <Canvas
+                        ref={canvasRef}
+                        width={sizes[0]}
+                        height={sizes[1]}
+                    />
+                    <Flash
+                        flash={isFlashing}
+                        onAnimationEnd={() => {
+                            setIsFlashingState(false);
+                        }}
+                    />
+                </React.Fragment>
+            </Scene>
+            <Scores scores={scores} />
         </Flex>
     );
 }

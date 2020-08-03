@@ -1,9 +1,14 @@
 import * as React from 'react';
 
-export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): MediaStream | null {
+export type UseUserMediaReturnType = {
+    mediaStream: MediaStream | null;
+    getMediaStream: () => void;
+};
+
+export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): UseUserMediaReturnType {
     const [mediaStream, setMediaStream] = React.useState<MediaStream | null>(null);
 
-    React.useEffect(() => {
+    const getMediaStream = () => {
         if (!mediaStream) {
             navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
                 .then((stream: MediaStream) => {
@@ -13,12 +18,12 @@ export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): Me
                     console.error(error);
                 });
         }
-        
-    }, [mediaStream, mediaStreamConstraints]);
+    };
 
     React.useEffect(() => {
         return () => {
             if (!!mediaStream) {
+                console.log('bim')
                 mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
                     track.stop();
                     mediaStream.removeTrack(track);
@@ -27,5 +32,8 @@ export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): Me
         };
     }, [mediaStream]);
 
-    return mediaStream;
+    return {
+        mediaStream,
+        getMediaStream,
+    };
 }

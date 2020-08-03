@@ -7,5 +7,4 @@ export const Canvas = styled.canvas`
     bottom: 0;
     right: 0;
     margin: 0;
-    opacity: 0;
 `;
