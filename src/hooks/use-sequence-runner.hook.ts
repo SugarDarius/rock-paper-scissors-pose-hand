@@ -4,7 +4,7 @@ import { useInterval } from 'react-use';
 export type UseSequenceRunnerItem = () => void;
 
 export type UseSequenceRunnerReturnType = {
-    isRunning: boolean;
+    isSequenceRunning: boolean;
     start: () => void;
     stop: () => void;
 };
@@ -23,20 +23,17 @@ export function useSequenceRunner(sequence: UseSequenceRunnerItem[], initialDela
     };
 
     useInterval(() => {
-        setSeqIndex(seqIndex + 1);
-    }, isRunning ? delay : null);
-
-    React.useEffect(() => {
         if (!!sequence[seqIndex] && !(seqIndex > sequence.length - 1)) {
+            setSeqIndex(seqIndex + 1);
             sequence[seqIndex]();
         }
         else {
             setIsRunningState(false);
         }
-    }, [seqIndex]);
+    }, isRunning ? delay : null);
 
     return {
-        isRunning,
+        isSequenceRunning: isRunning,
         start: () => { start(); },
         stop: () => { stop(); },
     };

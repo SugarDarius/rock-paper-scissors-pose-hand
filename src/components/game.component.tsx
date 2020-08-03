@@ -25,14 +25,14 @@ export type GameProps = {
 export function Game({ disable }: GameProps) {
     const [ scores, setScores ] = React.useState<number[]>([0, 0]);
     const [ isPlaying, setIsPlayingState ] = React.useState<boolean>(false);
-    const [ countdown, setCoundownValue ] = React.useState<'READY?' | 'ROCK!' | 'PAPER!' | 'SCISSORS!'>('READY?');
+    const [ incantation, setIncantationValue ] = React.useState<'READY?' | 'ROCK!' | 'PAPER!' | 'SCISSORS!'>('READY?');
 
     const { list, shuffle } = useShuffle<string>(['rock', 'paper', 'scissors']);
 
-    const { isRunning, start, } = useSequenceRunner([
-        () => { setCoundownValue('ROCK!') },
-        () => { setCoundownValue('PAPER!') },
-        () => { setCoundownValue('SCISSORS!') },
+    const { isSequenceRunning, start, } = useSequenceRunner([
+        () => { setIncantationValue('ROCK!') },
+        () => { setIncantationValue('PAPER!') },
+        () => { setIncantationValue('SCISSORS!') },
     ], 800);
 
     useKey(' ', () => {
@@ -48,10 +48,10 @@ export function Game({ disable }: GameProps) {
     }, [isPlaying]);
 
     React.useEffect(() => {
-        if (!isRunning && countdown === 'SCISSORS!') {
+        if (!isSequenceRunning && incantation === 'SCISSORS!') {
             console.log('take hand snapshot');
         }
-    }, [isRunning, countdown]);
+    }, [isSequenceRunning, incantation]);
 
     return (
         <Flex
@@ -94,7 +94,7 @@ export function Game({ disable }: GameProps) {
                                 </Text>
                             ) : (
                                 <Text as='span' fontWeight={700} fontSize='3rem' textAlign='center'>
-                                    {countdown}
+                                    {incantation}
                                 </Text>
                             )
                         }
