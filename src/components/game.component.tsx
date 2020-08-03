@@ -88,10 +88,16 @@ export function Game({ disable }: GameProps) {
                     >
                         {
                             !isPlaying ? (
-                                <Text as='span' fontWeight={500} fontSize='1.5rem' textAlign='center'>
-                                    <FontAwesomeIcon icon={['fas', 'keyboard']} /><br />
-                                    press space to start
-                                </Text>
+                                <React.Fragment>
+                                    <Text as='span' fontWeight={500} fontSize='1.5rem' textAlign='center'>
+                                        <FontAwesomeIcon icon={['fas', 'keyboard']} /><br />
+                                        press space to start
+                                    </Text>
+                                    <Text as='span' textAlign='center'>
+                                        After the incantation (Ready? - Rock! - Paper! - Scissors!) the camera will take a capture of your hand.<br />
+                                        Be sure to have your hand clearly visbile in front the camera.
+                                    </Text>
+                                </React.Fragment>
                             ) : (
                                 <Text as='span' fontWeight={700} fontSize='3rem' textAlign='center'>
                                     {incantation}
