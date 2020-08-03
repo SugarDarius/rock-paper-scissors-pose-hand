@@ -8,15 +8,15 @@ export type UseShuffleReturnType<T> = {
 export function useShuffle<T>(input: T[]): UseShuffleReturnType<T> {
     const [ output, setOutput ] = React.useState<T[]>([]);
 
-    const shuffle = <T>(list: T[]): void => {
-        let shuffledList: typeof output = [];
+    const shuffle = (list: T[]): void => {
         const length = list.length;
+        let shuffledList = [...list];
 
         if (length > 0) {
             let index = -1;
             const lastIndex = length - 1;
 
-            while (++index) {
+            while (++index < length) {
                 const rand = index + Math.floor(Math.random() * (lastIndex - index + 1));
                 const value = shuffledList[rand];
 

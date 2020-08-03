@@ -34,7 +34,7 @@ export function GreetingsModal({ open, onClose }: GreetingsModalProps) {
                         It use the power of <Link isExternal href='https://www.tensorflow.org/js'>TensorflowJS</Link> and the <Link isExternal href='https://github.com/tensorflow/tfjs-models/tree/master/handpose'>HandPose model</Link>
                     </Text>
                     <Text fontSize='md'>
-                        The main goal here is you use your own hand ✋ to play the game and to beat a simple shuffle array algorithm 😁
+                        The main goal here is you use your own hand ✋ to play the game and to beat a simple shuffle array algorithm with random selection 😁
                     </Text>
                     <Text fontSize='sm' mt='10px'>
                         To play be sure to authorize this webapp to access to your camera. Without it you will be able to play. <br />

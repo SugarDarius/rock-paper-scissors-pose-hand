@@ -3,6 +3,8 @@ import styled from '@emotion/styled'
 
 export type CameraProps = {
     isVideoPlaying?: boolean;
+    width: number;
+    height: number;
     onCanPlay: () => void;
 };
 
@@ -16,6 +18,8 @@ export const Video = styled.video`
 export const Camera = React.forwardRef((props: CameraProps, ref: React.Ref<HTMLVideoElement>) => {
     const {
         isVideoPlaying,
+        width,
+        height,
         onCanPlay
     } = props;
 
@@ -23,8 +27,8 @@ export const Camera = React.forwardRef((props: CameraProps, ref: React.Ref<HTMLV
         <Video
             ref={ref}
             hidden={!isVideoPlaying}
-            width={640}
-            height={480}
+            width={width}
+            height={height}
             onCanPlay={onCanPlay}
             autoPlay
             muted
