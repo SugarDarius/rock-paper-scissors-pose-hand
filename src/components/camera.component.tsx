@@ -7,12 +7,14 @@ export type CameraProps = {
 
 export const Camera = React.forwardRef((props: CameraProps, ref: React.Ref<HTMLVideoElement>) => {
     const {
+        isVideoPlaying,
         onCanPlay
     } = props;
 
     return (
         <video
             ref={ref}
+            hidden={!isVideoPlaying}
             width={640}
             height={480}
             onCanPlay={onCanPlay}

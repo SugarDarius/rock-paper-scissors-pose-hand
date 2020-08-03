@@ -62,6 +62,7 @@ export function Game({ disable }: GameProps) {
 
     React.useEffect(() => {
         if (!isSequenceRunning && incantation === 'SCISSORS!') {
+            shuffle();
             console.log('take hand snapshot');
         }
     }, [isSequenceRunning, incantation]);
@@ -73,6 +74,11 @@ export function Game({ disable }: GameProps) {
     const onCanPlay = () => {
         setIsVideoPlaying(true);
         videoRef.current.play();
+    };
+
+    const reset = () => {
+        setIncantationValue('READY?');
+        setIsPlayingState(false);
     };
 
     return (
@@ -149,7 +155,7 @@ export function Game({ disable }: GameProps) {
                                 !!mediaStream ? (
                                     <Camera
                                         ref={videoRef}
-                                        isVideoPlaying
+                                        isVideoPlaying={isVideoPlaying}
                                         onCanPlay={onCanPlay}
                                     />
                                 ) : null
