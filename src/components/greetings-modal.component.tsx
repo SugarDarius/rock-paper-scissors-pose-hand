@@ -36,6 +36,11 @@ export function GreetingsModal({ open, onClose }: GreetingsModalProps) {
                     <Text fontSize='md'>
                         The main goal here is you use your own hand ✋ to play the game and to beat a simple shuffle array algorithm 😁
                     </Text>
+                    <Text fontSize='sm' mt='10px'>
+                        To play be sure to authorize this webapp to access to your camera. Without it you will be able to play. <br />
+                        The camera stream is only into your browser, it's not recorded on any kind of servers.<br />
+                        Your data is your own data.
+                    </Text>
                 </ModalBody>
                 <ModalFooter>
                     <Button 
