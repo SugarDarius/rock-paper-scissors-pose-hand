@@ -18,6 +18,8 @@ import {
     useSequenceRunner,
 } from '../hooks';
 
+import { Camera } from './camera.component';
+
 export type GameProps = {
     disable?: boolean;
 };
@@ -115,11 +117,16 @@ export function Game({ disable }: GameProps) {
                         justifyContent='center'
                         padding='0 12px'
                     >
-                        <Box
+                        <Flex
+                            position='relative'
+                            direction='column'
+                            alignItems='center'
+                            justifyContent='center'
                             width='640px'
                             height='500px'
-                            backgroundColor='red.400' 
-                        />
+                        >
+                            <Camera />
+                        </Flex>
                     </Flex>
                 </Flex>
             </Flex>
