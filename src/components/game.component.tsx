@@ -16,6 +16,7 @@ import {
 import { 
     useShuffle,
     useSequenceRunner,
+    useUserMedia,
 } from '../hooks';
 
 import { Camera } from './camera.component';
@@ -25,13 +26,23 @@ export type GameProps = {
 };
 
 export function Game({ disable }: GameProps) {
+    const videoRef = React.useRef<HTMLVideoElement>(null);
+
     const [ scores, setScores ] = React.useState<number[]>([0, 0]);
     const [ isPlaying, setIsPlayingState ] = React.useState<boolean>(false);
     const [ incantation, setIncantationValue ] = React.useState<'READY?' | 'ROCK!' | 'PAPER!' | 'SCISSORS!'>('READY?');
+    const [isVideoPlaying, setIsVideoPlaying] = React.useState<boolean>(false);
 
+    const mediaStream = useUserMedia({
+        audio: false,
+        video: {
+            facingMode: 'user',
+        }
+    });
+    
     const { list, shuffle } = useShuffle<string>(['rock', 'paper', 'scissors']);
 
-    const { isSequenceRunning, start, } = useSequenceRunner([
+    const { isSequenceRunning, start } = useSequenceRunner([
         () => { setIncantationValue('ROCK!') },
         () => { setIncantationValue('PAPER!') },
         () => { setIncantationValue('SCISSORS!') },
@@ -54,6 +65,15 @@ export function Game({ disable }: GameProps) {
             console.log('take hand snapshot');
         }
     }, [isSequenceRunning, incantation]);
+
+    if (!!mediaStream && !!videoRef.current && !videoRef.current.srcObject) {
+        videoRef.current.srcObject = mediaStream;
+    }
+
+    const onCanPlay = () => {
+        setIsVideoPlaying(true);
+        videoRef.current.play();
+    };
 
     return (
         <Flex
@@ -123,9 +143,17 @@ export function Game({ disable }: GameProps) {
                             alignItems='center'
                             justifyContent='center'
                             width='640px'
-                            height='500px'
+                            height='480px'
                         >
-                            <Camera />
+                            {
+                                !!mediaStream ? (
+                                    <Camera
+                                        ref={videoRef}
+                                        isVideoPlaying
+                                        onCanPlay={onCanPlay}
+                                    />
+                                ) : null
+                            }
                         </Flex>
                     </Flex>
                 </Flex>

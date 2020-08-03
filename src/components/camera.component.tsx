@@ -1,35 +1,24 @@
 import * as React from 'react';
 
-import { 
-    useUserMedia
-} from '../hooks';
+export type CameraProps = {
+    isVideoPlaying?: boolean;
+    onCanPlay: () => void;
+};
 
-export function Camera() {
-    const videoRef = React.useRef<HTMLVideoElement>(null);
-    const mediaStream = useUserMedia({
-        audio: false,
-        video: { 
-            facingMode: 'user',
-        }
-    });
-
-    if (!!mediaStream && !!videoRef.current &&  !videoRef.current.srcObject) {
-        videoRef.current.srcObject = mediaStream;
-    }
-
-    const onCanPlay = () => {
-        videoRef.current.play();
-    };
+export const Camera = React.forwardRef((props: CameraProps, ref: React.Ref<HTMLVideoElement>) => {
+    const {
+        onCanPlay
+    } = props;
 
     return (
         <video
-            ref={videoRef}
+            ref={ref}
             width={640}
-            height={500}
+            height={480}
             onCanPlay={onCanPlay}
             autoPlay
             muted
             playsInline
         />
     );
-}
+});

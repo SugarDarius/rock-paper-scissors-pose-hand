@@ -1,31 +1,31 @@
 import * as React from 'react';
 
-export function useUserMedia(requestMedia: MediaStreamConstraints): MediaStream | null {
+export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): MediaStream | null {
     const [mediaStream, setMediaStream] = React.useState<MediaStream | null>(null);
 
     React.useEffect(() => {
-        const enableMediaStream = async (): Promise<void> => {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia(requestMedia);
-                setMediaStream(stream);
-            }
-            catch (error) {
-                console.error(error);
-            }
-        };
-
         if (!mediaStream) {
-            enableMediaStream();
+            navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+                .then((stream: MediaStream) => {
+                    setMediaStream(stream);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
+        
+    }, [mediaStream, mediaStreamConstraints]);
 
+    React.useEffect(() => {
         return () => {
-            if (mediaStream) {
+            if (!!mediaStream) {
                 mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
                     track.stop();
+                    mediaStream.removeTrack(track);
                 });
             }
         };
-    }, [mediaStream, requestMedia]);
+    }, [mediaStream]);
 
     return mediaStream;
 }
