@@ -14,6 +14,8 @@ import {
 
 import { Flash } from './flash.component';
 import { Canvas } from './canvas.component';
+import { CameraPlaceholder } from './camera-placeholder.component';
+import { NoCamera } from './no-camera.component';
 import { Camera } from './camera.component';
 import { Scene } from './scene.component';
 import { Display, Incantation } from './display.component';
@@ -179,6 +181,7 @@ export function Game({ disable }: GameProps) {
                     handIcon={!!algoHand ? icons[algoHand] : 'hand-peace'}
                 />
                 <React.Fragment>
+                    <CameraPlaceholder showIcon={!mediaStream} />
                     {
                         !!mediaStream ? (
                             <Camera
@@ -188,7 +191,9 @@ export function Game({ disable }: GameProps) {
                                 height={sizes[1]}
                                 onCanPlay={onCanPlay}
                             />
-                        ) : null
+                        ) : (
+                            <NoCamera />
+                        )
                     }
                     <Canvas
                         ref={canvasRef}

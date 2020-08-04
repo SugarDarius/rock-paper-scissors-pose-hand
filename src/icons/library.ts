@@ -16,6 +16,8 @@ import {
     faMinus,
     faKeyboard,
     faSpinner,
+    faVideo,
+    faVideoSlash,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -32,4 +34,6 @@ library.add(
     faMinus,
     faKeyboard,
     faSpinner,
+    faVideo,
+    faVideoSlash,
 );

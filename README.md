@@ -9,6 +9,9 @@
 </p>
 
 <p align="center">
+  <a href="https://twitter.com/azeldvin">
+    <img alt="say" src="https://img.shields.io/badge/say-hi!-blue"/>
+  </a>
   <a href="https://twitter.com/azeldvin">  
     <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azeldvin?style=social">
   </a>
