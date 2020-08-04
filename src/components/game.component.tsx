@@ -122,7 +122,7 @@ export function Game({ disable }: GameProps) {
         if (!!prediction && !!algoHand) {
             console.log('compute winner');
 
-            const winner = computeRPSWinner([prediction, algoHand]);
+            const winner = computeRPSWinner([algoHand, prediction]);
 
             setScores([
                 scores[0] + (winner === 1 ? 1 : 0), 

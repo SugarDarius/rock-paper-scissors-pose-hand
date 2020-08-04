@@ -26,7 +26,7 @@ export function Scores(props: ScoresProps) {
             <Box position='relative'>
                 <Text as='span' fontSize='4rem' fontWeight={700}>
                     ALGO
-                    </Text>
+                </Text>
             </Box>
             <Flex
                 position='relative'
