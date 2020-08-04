@@ -174,6 +174,7 @@ export function Game({ disable }: GameProps) {
                     isModelError={!!error}
                     isPlayerPlaying={isPlayerPlaying}
                     isEndGame={isEndGamePredicate}
+                    hasPrediction={!!prediction}
                     incantation={incantation}
                     handIcon={!!algoHand ? icons[algoHand] : 'hand-peace'}
                 />

@@ -13,6 +13,7 @@ export type DisplayProps = {
     isModelError?: boolean;
     isPlayerPlaying?: boolean;
     isEndGame?: boolean;
+    hasPrediction?: boolean;
     incantation: Incantation;
     handIcon: IconName;
 };
@@ -25,6 +26,7 @@ export function Display(props: DisplayProps) {
         isEndGame,
         incantation,
         handIcon,
+        hasPrediction,
     } = props;
 
     let content = null;
@@ -59,9 +61,13 @@ export function Display(props: DisplayProps) {
                 <Text as='span' fontWeight={700} fontSize='6rem' textAlign='center'>
                     <FontAwesomeIcon icon={['fas', handIcon]} />
                 </Text>
-                <Text as='span'>
-                    <FontAwesomeIcon icon={['fas', 'spinner']} spin /> Getting prediction from the model your hand
-                </Text>
+                {
+                    !hasPrediction ? (
+                        <Text as='span'>
+                            <FontAwesomeIcon icon={['fas', 'spinner']} spin /> Getting prediction from the model your hand
+                        </Text>
+                    ) : null
+                }
             </Flex>
         );
     }
