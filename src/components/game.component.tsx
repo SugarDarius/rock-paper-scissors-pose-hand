@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Flex } from '@chakra-ui/core';
+import {  Flex } from '@chakra-ui/core';
 import { IconName } from '@fortawesome/free-solid-svg-icons';
 
 import { useKey } from 'react-use';
@@ -214,8 +214,8 @@ export function Game({ disable }: GameProps) {
                                 onCanPlay={onCanPlay}
                             />
                         ) : (
-                            <NoCamera />
-                        )
+                                <NoCamera />
+                            )
                     }
                     <Canvas
                         ref={canvasRef}

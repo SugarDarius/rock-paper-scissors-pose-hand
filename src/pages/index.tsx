@@ -47,77 +47,77 @@ export default function IndexPage(): React.ReactElement {
     
     return (
         <Layout>
-            <Meta
-                title='Play!'
-                titleTemplate={site.siteMetadata.title}
-				description={site.siteMetadata.description} 
-            />
-            <Flex
-				position='relative'
-				direction='column'
-				width='100vw'
-				height='100vh'
-				alignItems='center'
-				justifyContent='center'
-			>
+            <WrapperColorSchemeMode>
+                <Meta
+                    title='Play!'
+                    titleTemplate={site.siteMetadata.title}
+                    description={site.siteMetadata.description}
+                />
                 <Flex
                     position='relative'
                     direction='column'
-                    width='100%'
-                    height='auto'
-                    padding='24px'
+                    width='100vw'
+                    height='100vh'
                     alignItems='center'
                     justifyContent='center'
                 >
-                    <Stack
-                        direction='row' 
+                    <Flex
+                        position='relative'
+                        direction='column'
+                        width='100%'
+                        height='auto'
+                        padding='24px'
                         alignItems='center'
-                        spacing='1.550rem'
+                        justifyContent='center'
                     >
-                        <Box width='auto'>
-                            <FontAwesomeIcon icon={['fas', 'hand-rock']} size='2x'/>
-                        </Box>
-                        <Box width='auto'>
-                            <FontAwesomeIcon icon={['fas', 'hand-paper']} size='2x'/>
-                        </Box>
-                        <Box width='auto'>
-                            <FontAwesomeIcon icon={['fas', 'hand-scissors']} size='2x'/>
-                        </Box>
-                    </Stack>
-                </Flex>
-                <Flex
-                    position='relative'
-                    direction='column'
-                    width='100%'
-                    height='auto'
-                    flex='1'
-                    alignItems='center'
-                    justifyContent='center'
-                >
-                    <Game disable={isOpen} />
-                </Flex>
-                <Flex
-                    position='relative'
-                    direction='column'
-                    width='100%'
-                    height='auto'
-                    padding='24px'
-                    alignItems='center'
-                    justifyContent='center'
-                >
-                    <Text fontSize='md' textAlign='center'>
-                        Made with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link><br />
+                        <Stack
+                            direction='row'
+                            alignItems='center'
+                            spacing='1.550rem'
+                        >
+                            <Box width='auto'>
+                                <FontAwesomeIcon icon={['fas', 'hand-rock']} size='2x' />
+                            </Box>
+                            <Box width='auto'>
+                                <FontAwesomeIcon icon={['fas', 'hand-paper']} size='2x' />
+                            </Box>
+                            <Box width='auto'>
+                                <FontAwesomeIcon icon={['fas', 'hand-scissors']} size='2x' />
+                            </Box>
+                        </Stack>
+                    </Flex>
+                    <Flex
+                        position='relative'
+                        direction='column'
+                        width='100%'
+                        height='auto'
+                        flex='1'
+                        alignItems='center'
+                        justifyContent='center'
+                    >
+                        <Game disable={isOpen} />
+                    </Flex>
+                    <Flex
+                        position='relative'
+                        direction='column'
+                        width='100%'
+                        height='auto'
+                        padding='24px'
+                        alignItems='center'
+                        justifyContent='center'
+                    >
+                        <Text fontSize='md' textAlign='center'>
+                            Made with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link><br />
                         You can check the code <FontAwesomeIcon icon={['fas', 'code']} size='1x' /> on <Link isExternal href='https://github.com/SugarDarius/rock-paper-scissors-pose-hand'>GitHub <FontAwesomeIcon icon={['fab', 'github']} size='1x' /></Link>
-                    </Text>
-                </Flex>
-                <Box
-					position='absolute'
-					bottom='1.25rem'
-					right='1.25rem'
-					width='auto'
-					height='auto'
-				>
-                    <WrapperColorSchemeMode>
+                        </Text>
+                    </Flex>
+                    <Box
+                        position='absolute'
+                        bottom='1.25rem'
+                        right='1.25rem'
+                        width='auto'
+                        height='auto'
+                    >
                         <Tooltip
                             hasArrow
                             label={`Use ${isDarkMode ? 'light' : 'dark'} mode`}
@@ -131,14 +131,14 @@ export default function IndexPage(): React.ReactElement {
                                 isRound
                             />
                         </Tooltip>
-                    </WrapperColorSchemeMode>
-				</Box>
-            </Flex>
-            <GreetingsModal 
-                open={isOpen} 
-                onClose={onClose} 
-            />
-            <MobileModal open={isMobile} />
+                    </Box>
+                </Flex>
+                <GreetingsModal
+                    open={isOpen}
+                    onClose={onClose}
+                />
+                <MobileModal open={isMobile} />
+            </WrapperColorSchemeMode>
         </Layout>
     );
 }

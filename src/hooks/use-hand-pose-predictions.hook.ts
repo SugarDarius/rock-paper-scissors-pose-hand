@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { load, HandPose } from '@tensorflow-models/handpose';
 
-import { RPSLogicInput } from '../logics';
+import { RPSLogicInput, computeHPHandShape } from '../logics';
 
 export type UseHandPredictionsType = RPSLogicInput; 
 
@@ -45,7 +45,12 @@ export function useHandPosePredictions(canvasRef: React.RefObject<HTMLCanvasElem
         const estimateHands = async (): Promise<void> => {
             const predictions = await model.estimateHands(canvasRef.current);
             console.log('predictions', predictions);
-            setPrediction('rock');
+            if (predictions.length > 0) {
+                const { boundingBox, annotations } = predictions[0];
+                const handShape = computeHPHandShape(boundingBox, annotations);
+
+                setPrediction(handShape);
+            }
         };
 
         if (!!model && !!canvasRef.current) {
