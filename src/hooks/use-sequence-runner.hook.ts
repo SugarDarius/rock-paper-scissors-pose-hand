@@ -9,9 +9,8 @@ export type UseSequenceRunnerReturnType = {
     stop: () => void;
 };
 
-export function useSequenceRunner(sequence: UseSequenceRunnerItem[], initialDelay: number): UseSequenceRunnerReturnType {
+export function useSequenceRunner(sequence: UseSequenceRunnerItem[], delay: number): UseSequenceRunnerReturnType {
     const [ isRunning, setIsRunningState ] = React.useState<boolean>(false);
-    const [ delay, setDelay ] = React.useState<number>(initialDelay);
     const [ seqIndex, setSeqIndex ] = React.useState<number>(0);
 
     const start = () => {
@@ -29,6 +28,7 @@ export function useSequenceRunner(sequence: UseSequenceRunnerItem[], initialDela
         }
         else {
             setIsRunningState(false);
+            setSeqIndex(0);
         }
     }, isRunning ? delay : null);
 

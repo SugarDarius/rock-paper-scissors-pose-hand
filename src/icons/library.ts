@@ -18,6 +18,10 @@ import {
     faSpinner,
     faVideo,
     faVideoSlash,
+    faBug,
+    faTrophy,
+    faFrown,
+    faAmericanSignLanguageInterpreting,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -36,4 +40,8 @@ library.add(
     faSpinner,
     faVideo,
     faVideoSlash,
+    faBug,
+    faTrophy,
+    faFrown,
+    faAmericanSignLanguageInterpreting,
 );
