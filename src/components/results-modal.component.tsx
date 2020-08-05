@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export type ResultsModalProps = {
     open?: boolean;
     onClose: () => void;
-    result: 0 | 1 | 2;
+    result: 0 | 1 | 2 | 3;
     noPrediction?: boolean;
 }
 
@@ -32,23 +32,26 @@ export function ResultsModal(props: ResultsModalProps) {
         0: 'american-sign-language-interpreting',
         1: 'frown',
         2: 'trophy',
+        3: 'bug',
     };
 
     const headlines: { [key: number]: string } = {
         0: `IT'S MATCH! 🤪`,
         1: 'OH NO! 🥺',
         2: 'BRAVO! 🎉🎉',
+        3: `'SORRY! 🤔`,
     };
 
     const subheadlines: { [key: number]: string } = { 
-        0: `You and the ALGO where on the thoughts`,
+        0: `You and the ALGO where on the same thoughts`,
         1: `Play another round to beat the ALGO 😀`,
         2: `It's a win! Well done!`,
+        3: `HandPose model could not find any prediction for your hand`,
     };
 
-    const icon: IconName = noPrediction ? 'bug' : icons[result];
-    const headline: string = noPrediction ? `'SORRY! 🤔` : headlines[result];
-    const subheadline: string = noPrediction ? `HandProse model could not find any prediction for your hand` : subheadlines[result];
+    const icon: IconName = icons[result];
+    const headline: string = headlines[result];
+    const subheadline: string = subheadlines[result];
 
     return (
         <Modal

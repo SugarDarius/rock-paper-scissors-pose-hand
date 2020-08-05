@@ -44,12 +44,16 @@ export function useHandPosePredictions(canvasRef: React.RefObject<HTMLCanvasElem
     const getPrediction = ()  => {
         const estimateHands = async (): Promise<void> => {
             const predictions = await model.estimateHands(canvasRef.current);
-            console.log('predictions', predictions);
             if (predictions.length > 0) {
                 const { boundingBox, annotations } = predictions[0];
                 const handShape = computeHPHandShape(boundingBox, annotations);
+                console.log('hand shape', handShape);
 
                 setPrediction(handShape);
+                
+            }
+            else {
+                setPrediction('unknown');
             }
         };
 

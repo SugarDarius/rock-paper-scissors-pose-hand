@@ -64,7 +64,7 @@ export function Display(props: DisplayProps) {
                 {
                     !hasPrediction ? (
                         <Text as='span'>
-                            <FontAwesomeIcon icon={['fas', 'spinner']} spin /> Getting prediction from the model your hand
+                            <FontAwesomeIcon icon={['fas', 'spinner']} spin /> Getting prediction from the model of your hand
                         </Text>
                     ) : null
                 }

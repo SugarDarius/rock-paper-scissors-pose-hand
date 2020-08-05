@@ -50,7 +50,7 @@ export function Game({ disable }: GameProps) {
     const [listIsShuffled, setListIsShuffledState] = React.useState<boolean>(false);
     const [algoHand, setAlgoHand] = React.useState<HandState>(null);
     const [showResults, setShowResultsState] = React.useState<boolean>(false);
-    const [result, setResult] = React.useState<0 | 1 | 2>(0);
+    const [result, setResult] = React.useState<0 | 1 | 2 | 3>(0);
 
     const {
         loading,
@@ -91,7 +91,6 @@ export function Game({ disable }: GameProps) {
 
     React.useEffect(() => {
         if (isPlayerPlaying) {
-            console.log('here we go')
             start();
         }
     }, [isPlayerPlaying]);
@@ -113,15 +112,12 @@ export function Game({ disable }: GameProps) {
 
     React.useEffect(() => {
         if (!!algoHand && !isCanvasEmpty) {
-            console.log('time to predict with', algoHand);
             getPrediction();
         }
     }, [algoHand, isCanvasEmpty]);
 
     React.useEffect(() => {
         if (!!prediction && !!algoHand) {
-            console.log('compute winner');
-
             const winner = computeRPSWinner([algoHand, prediction]);
 
             setScores([
@@ -236,7 +232,6 @@ export function Game({ disable }: GameProps) {
                 onClose={() => {
                     reset();
                 }}
-                noPrediction={!prediction}
                 result={result}
             />
         </Flex>

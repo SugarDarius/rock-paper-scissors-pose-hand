@@ -23,7 +23,6 @@ export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): Us
     React.useEffect(() => {
         return () => {
             if (!!mediaStream) {
-                console.log('bim')
                 mediaStream.getTracks().forEach((track: MediaStreamTrack) => {
                     track.stop();
                     mediaStream.removeTrack(track);

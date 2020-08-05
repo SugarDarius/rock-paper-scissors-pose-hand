@@ -107,7 +107,7 @@ export default function IndexPage(): React.ReactElement {
                         justifyContent='center'
                     >
                         <Text fontSize='md' textAlign='center'>
-                            Made with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link><br />
+                            Made with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link> © 2020<br />
                         You can check the code <FontAwesomeIcon icon={['fas', 'code']} size='1x' /> on <Link isExternal href='https://github.com/SugarDarius/rock-paper-scissors-pose-hand'>GitHub <FontAwesomeIcon icon={['fab', 'github']} size='1x' /></Link>
                         </Text>
                     </Flex>
