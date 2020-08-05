@@ -8,7 +8,7 @@ export type MetaProps = {
 };
 
 export function Meta(props: React.PropsWithChildren<MetaProps>) {
-    const { title, titleTemplate, description } = props;
+    const { title, titleTemplate, description, children } = props;
 
     return (
         <Helmet
@@ -23,6 +23,8 @@ export function Meta(props: React.PropsWithChildren<MetaProps>) {
                     content: description || ''
                 },
             ]}
-        />
+        >
+            {children}
+        </Helmet>
     );
 }
