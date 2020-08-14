@@ -41,6 +41,9 @@ export function GreetingsModal({ open, onClose }: GreetingsModalProps) {
                         The camera stream is only into your browser, it's not recorded on any kind of servers.<br />
                         Your data is your own data.
                     </Text>
+                    <Text fontSize='sm' mt='10px'>
+                        As this webapp use <Link isExternal href='https://www.tensorflow.org/js'>TensorflowJS</Link> a connection to internet is required.
+                    </Text>
                 </ModalBody>
                 <ModalFooter>
                     <Button 

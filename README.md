@@ -53,11 +53,18 @@ After, to make the prediction of which shape is reprensented by your hand, the c
 This will give the landmarks' coordinates of each fingers from your hand. 
 
 When the model has computed the coordinates I apply a logic to calcutate which fingers are open or not.<br />
+Each fingers are reprensented by four three-dimensionals points (x, y, z). The logic to apply here is a mathematic formula ([torsion angle](https://en.wikipedia.org/wiki/Dihedral_angle)) to determnie if the angle in degrees between the first and the last point is between 0 and 90 deg.<br />
+If we have and angle is more than 60 deg I consider the finger open else not.
+
 Based on this the logic determines which shape is represente by your hand 😀.
+
+## Requirements
+As this webapp needs a stream from the webcam's user, he must give consent for the webapp use the camera.<br />
+And another requirement is that a network connection to internet required because of [TensorflowJS](https://www.tensorflow.org/js) specifications.
 
 ## Special thanks 👏
 I'd like to thanks [Jen Looper](https://twitter.com/jenlooper) which has gave an amazing talk about [PoseDance](https://proud-moss-070616b1e.azurestaticapps.net/) at [#AskTheExpert](https://twitter.com/ATEOnAir).<br />
-Her talk gave me the desire and the inspiration to carry out this project 😊.
+Her talk gave me the desire, the inspiration and the strength to carry out this project 😊.
 
 <p align="center">
   Made with ❤ by <a href="https://github.com/SugarDarius">SugarDarius</a>

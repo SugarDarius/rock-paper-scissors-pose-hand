@@ -8,7 +8,7 @@ export type UseUserMediaReturnType = {
 export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): UseUserMediaReturnType {
     const [mediaStream, setMediaStream] = React.useState<MediaStream | null>(null);
 
-    const getMediaStream = () => {
+    const getMediaStream = React.useCallback(() => {
         if (!mediaStream) {
             navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
                 .then((stream: MediaStream) => {
@@ -18,7 +18,7 @@ export function useUserMedia(mediaStreamConstraints: MediaStreamConstraints): Us
                     console.error(error);
                 });
         }
-    };
+    }, [mediaStream]);
 
     React.useEffect(() => {
         return () => {

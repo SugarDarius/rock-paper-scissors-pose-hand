@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as tf from '@tensorflow/tfjs';
-import { load, HandPose } from '@tensorflow-models/handpose';
+import * as tfjs from '@tensorflow/tfjs';
+import * as handpose from '@tensorflow-models/handpose';
 
 import { RPSLogicInput, computeHPHandShape } from '../logics';
 
@@ -17,14 +17,14 @@ export type UseHandPredictionsReturnType = {
 export function useHandPosePredictions(canvasRef: React.RefObject<HTMLCanvasElement>) {
     const [error, setError] = React.useState<any>(null);
     const [loading, setLoading] = React.useState<boolean>(true);
-    const [model, setModel] = React.useState<HandPose | null>(null);
+    const [model, setModel] = React.useState<any | null>(null);
     const [prediction, setPrediction] = React.useState<UseHandPredictionsType | null>(null);
 
     React.useEffect(() => {
         const loadModel = async (): Promise<void> => {
             try {
-                await tf.setBackend('webgl');
-                const loadedModel = await load();
+                await tfjs.setBackend('webgl');
+                const loadedModel = await handpose.load();
                 
                 setLoading(false);
                 setModel(loadedModel);
@@ -41,12 +41,12 @@ export function useHandPosePredictions(canvasRef: React.RefObject<HTMLCanvasElem
         }
     }, [canvasRef, model, loading]);
 
-    const getPrediction = ()  => {
+    const getPrediction = () => {
         const estimateHands = async (): Promise<void> => {
             const predictions = await model.estimateHands(canvasRef.current);
             if (predictions.length > 0) {
-                const { boundingBox, annotations } = predictions[0];
-                const handShape = computeHPHandShape(boundingBox, annotations);
+                const { annotations } = predictions[0];
+                const handShape = await computeHPHandShape(annotations);
                 console.log('hand shape', handShape);
 
                 setPrediction(handShape);
