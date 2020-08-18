@@ -9,6 +9,17 @@
 </p>
 
 <p align="center">
+  <img align="center" alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/SugarDarius/rock-paper-scissors-pose-hand">
+</p>
+
+<p align="center">
+   <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/SugarDarius/rock-paper-scissors-pose-hand">
+  <a href="https://github.com/SugarDarius/rock-paper-scissors-pose-hand/blob/master/LICENSE">
+    <img alt="GitHub" src="https://img.shields.io/github/license/SugarDarius/rock-paper-scissors-pose-hand">
+  </a>
+</p>
+
+<p align="center">
   <a href="https://twitter.com/azeldvin">
     <img alt="say" src="https://img.shields.io/badge/say-hi!-blue"/>
   </a>
