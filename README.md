@@ -22,7 +22,7 @@ Rock Paper Scissors Pose Hand is a webapp to play the classic game "Rock Paper S
 It uses the [TensorflowJS](https://www.tensorflow.org/js) model [posehand](https://github.com/tensorflow/tfjs-models/tree/master/handpose) developed with [Gatsby](https://www.gatsbyjs.org/) with [CharkraUI](https://chakra-ui.com/) and deployed on [Azure Static Web Apps](https://azure.microsoft.com/en-us/services/app-service/static/).
 
 ## A word about 💬
-This project is still **experimental and under development**. So when using it you may endure issuers or bugs.<br />
+This project is still **experimental and under development**. So when using it you may endure issues or bugs.<br />
 The main goal here is to provide users some fun when interacting with an ML model which is here the [TensorflowJS](https://www.tensorflow.org/js) model [posehand](https://github.com/tensorflow/tfjs-models/tree/master/handpose).
 
 Feel free to open issues to increase the efficiency and the of this projet 😀.

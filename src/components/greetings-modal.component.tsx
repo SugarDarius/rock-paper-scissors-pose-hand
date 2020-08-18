@@ -22,6 +22,7 @@ export function GreetingsModal({ open, onClose }: GreetingsModalProps) {
         <Modal 
             isOpen={open} 
             isCentered
+            onClose={() => {}}
         >
             <ModalOverlay />
             <ModalContent>

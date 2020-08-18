@@ -47,7 +47,7 @@ export function useHandPosePredictions(canvasRef: React.RefObject<HTMLCanvasElem
             if (predictions.length > 0) {
                 const { annotations } = predictions[0];
                 const handShape = await computeHPHandShape(annotations);
-                console.log('hand shape', handShape);
+                // console.log('hand shape', handShape);
 
                 setPrediction(handShape);
                 

@@ -174,10 +174,11 @@ export function Game({ disable }: GameProps) {
         setResult(0);
     };
 
-    const isEndGamePredicate = !isCanvasEmpty && incantation === 'SCISSORS!' && listIsShuffled && !!algoHand;
     if (!!mediaStream && !!videoRef.current && !videoRef.current.srcObject) {
         videoRef.current.srcObject = mediaStream;
     }
+
+    const isEndGamePredicate = !isCanvasEmpty && incantation === 'SCISSORS!' && listIsShuffled && !!algoHand;
 
     return (
         <Flex
