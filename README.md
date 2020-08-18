@@ -64,8 +64,9 @@ After, to make the prediction of which shape is reprensented by your hand, the c
 This will give the landmarks' coordinates of each fingers from your hand. 
 
 When the model has computed the coordinates I apply a logic to calcutate which fingers are open or not.<br />
-Each fingers are reprensented by four three-dimensionals points (x, y, z). The logic to apply here is a mathematic formula ([torsion angle](https://en.wikipedia.org/wiki/Dihedral_angle)) to determnie if the angle in degrees between the first and the last point is between 0 and 90 deg.<br />
-If we have and angle is more than 60 deg I consider the finger open else not.
+Each fingers are reprensented by four three-dimensionals points (x, y, z).<br />
+The logic to apply here is a mathematic formula to determnie if the angle in degrees between the first and the last point is more than 130deg or not<br />
+If we have and angle is more than 130deg so I suppose that your finger is open.
 
 Based on this the logic determines which shape is represente by your hand 😀.
 
