@@ -2,10 +2,11 @@ name: Azure Static Web Apps CI/CD
 
 on:
   push:
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
     branches:
       - master
-    paths-ignore:
-      - 'README.md'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
