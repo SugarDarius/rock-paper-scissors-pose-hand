@@ -9,13 +9,15 @@ import {
 } from '@chakra-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { noop } from '../utils';
+
 export type MobileModalProps = {
     open?: boolean;
 }
 
 export function MobileModal({ open }: MobileModalProps) {
     return (
-        <Modal isOpen={open}>
+        <Modal isOpen={open} onClose={noop}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>

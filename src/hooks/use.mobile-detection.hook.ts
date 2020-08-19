@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-export function useMobileDetection(): boolean {
-    const [ isMobile, setIsMobile ] = React.useState<boolean>(false);
+export function useMobileDetection(defaultValue?: boolean): boolean {
+    const [ isMobile, setIsMobile ] = React.useState<boolean>(defaultValue);
 
     React.useEffect(() => {
         const isAndroid: boolean = /Android/i.test(navigator.userAgent);

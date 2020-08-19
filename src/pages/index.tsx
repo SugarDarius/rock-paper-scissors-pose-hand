@@ -31,7 +31,7 @@ import {
 
 export default function IndexPage(): React.ReactElement {
     const site = useSite();
-    const isMobile = useMobileDetection();
+    const isMobile = useMobileDetection(true);
 
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onClose } = useDisclosure(!isMobile);
@@ -95,7 +95,11 @@ export default function IndexPage(): React.ReactElement {
                         alignItems='center'
                         justifyContent='center'
                     >
-                        <Game disable={isOpen} />
+                        {
+                            !isMobile ? (
+                                <Game disable={isOpen} />
+                            ) : null
+                        }
                     </Flex>
                     <Flex
                         position='relative'
@@ -108,7 +112,7 @@ export default function IndexPage(): React.ReactElement {
                     >
                         <Text fontSize='md' textAlign='center'>
                             Made with ❤ by <Link isExternal href='https://github.com/SugarDarius'>SugarDarius</Link> © 2020<br />
-                        You can check the code <FontAwesomeIcon icon={['fas', 'code']} size='1x' /> on <Link isExternal href='https://github.com/SugarDarius/rock-paper-scissors-pose-hand'>GitHub <FontAwesomeIcon icon={['fab', 'github']} size='1x' /></Link>
+                            You can check the code <FontAwesomeIcon icon={['fas', 'code']} size='1x' /> on <Link isExternal href='https://github.com/SugarDarius/rock-paper-scissors-pose-hand'>GitHub <FontAwesomeIcon icon={['fab', 'github']} size='1x' /></Link>
                         </Text>
                     </Flex>
                     <Box
@@ -133,10 +137,14 @@ export default function IndexPage(): React.ReactElement {
                         </Tooltip>
                     </Box>
                 </Flex>
-                <GreetingsModal
-                    open={isOpen}
-                    onClose={onClose}
-                />
+                {
+                    !isMobile ? (
+                        <GreetingsModal
+                            open={isOpen}
+                            onClose={onClose}
+                        />
+                    ) : null
+                }
                 <MobileModal open={isMobile} />
             </WrapperColorSchemeMode>
         </Layout>

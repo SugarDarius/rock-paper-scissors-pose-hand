@@ -12,6 +12,8 @@ import {
     Link,
 } from '@chakra-ui/core';
 
+import { noop } from '../utils';
+
 export type GreetingsModalProps = {
     open?: boolean;
     onClose: () => void;
@@ -22,7 +24,7 @@ export function GreetingsModal({ open, onClose }: GreetingsModalProps) {
         <Modal 
             isOpen={open} 
             isCentered
-            onClose={() => {}}
+            onClose={noop}
         >
             <ModalOverlay />
             <ModalContent>
