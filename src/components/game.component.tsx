@@ -86,15 +86,10 @@ export function Game({ disable }: GameProps) {
     useKey(' ', () => {
         if (!isPlayerPlaying && !disable && !loading && !error && !!mediaStream) {
             setIsPlayerPlayingState(true);
-        }
-    }, { }, [isPlayerPlaying, disable, loading, error, mediaStream]);
-
-    React.useEffect(() => {
-        if (isPlayerPlaying) {
             start();
         }
-    }, [isPlayerPlaying]);
-
+    }, { }, [isPlayerPlaying, disable, loading, error, mediaStream]);
+    
     React.useEffect(() => {
         if (!isSequenceRunning && incantation === 'SCISSORS!') {
             shuffle();
