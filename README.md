@@ -13,18 +13,19 @@
 </p>
 
 <p align="center">
-   <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/SugarDarius/rock-paper-scissors-pose-hand">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/SugarDarius/rock-paper-scissors-pose-hand" />
+  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
   <a href="https://github.com/SugarDarius/rock-paper-scissors-pose-hand/blob/master/LICENSE">
-    <img alt="GitHub" src="https://img.shields.io/github/license/SugarDarius/rock-paper-scissors-pose-hand">
+    <img alt="GitHub" src="https://img.shields.io/github/license/SugarDarius/rock-paper-scissors-pose-hand" />
   </a>
 </p>
 
 <p align="center">
   <a href="https://twitter.com/azeldvin">
-    <img alt="say" src="https://img.shields.io/badge/say-hi!-blue"/>
+    <img alt="say" src="https://img.shields.io/badge/say-hi!-blue" />
   </a>
   <a href="https://twitter.com/azeldvin">  
-    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azeldvin?style=social">
+    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/azeldvin?style=social" />
   </a>
 </p>
 
